@@ -3,15 +3,12 @@ window.App = Ember.Application.create();
 App.Router.map(function(){
 	this.resource("about", { path: "/about" });
 	this.resource("resume", { path: "/resume"});
-	this.resource("tiaoc", { path: '/tiaoc' });
 	this.resource("raffler", { path: '/raffler' });
 });
 
-App.TiaocRoute = Ember.Route.extend({
-	renderTemplate: function(){
-		this.render('ticmain',{
-			outlet: "main"
-		});
+App.RafflerRoute = Ember.Route.extend({
+	setupController: function(controller) {
+	  return controller.set('content', []);
 	}
 });
 
@@ -20,18 +17,24 @@ App.Store = DS.Store.extend({
   url: "DS.FixtureAdpater"
 });
 
-App.Tiaoc = DS.Model.extend({
-	check: DS.attr('integer'),
-	circle: DS.attr('integer'),
-	message: DS.attr('string')
-});
-
-App.RafflerController = Ember.Controller.extend({
-    entries: [],
+App.RafflerController = Ember.ArrayController.extend({
     newEntry: function() {
-      this.entries.pushObject({
+      this.pushObject(Ember.Object.create({
         name: this.get('name')
-      });
-      this.set('name', "");
+      }));
+      return this.set('name', "");
+    },
+
+    drawWinner: function() {
+      var entry, pool;
+      pool = this.rejectProperty('win');
+      if (pool.length > 0) {
+        entry = pool[Math.floor(Math.random() * pool.length)];
+        entry.set('win', true);
+      }
     }
   });
+
+
+
+  // });
