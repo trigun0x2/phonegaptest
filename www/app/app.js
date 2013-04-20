@@ -30,6 +30,10 @@ App.RafflerController = Ember.ArrayController.extend({
         entry = pool[Math.floor(Math.random() * pool.length)];
         entry.set('win', true);
       }
+    },
+
+    clear1: function() {
+     this.clear();
     }
   });
 
