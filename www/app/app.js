@@ -1,9 +1,7 @@
 window.App = Ember.Application.create();
 
 App.Router.map(function(){
-	this.resource("about", { path: "/about" });
-	this.resource("resume", { path: "/resume"});
-	this.resource("raffler", { path: '/raffler' });
+	this.resource("raffler", { path: '/' });
 });
 
 App.RafflerRoute = Ember.Route.extend({
